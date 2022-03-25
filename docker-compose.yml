@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  app:
+    restart: always
+    build: .
+    ports:
+      - 8000:80
+    networks:
+      app_net:
+        ipv4_address: ${APP_ADDR}
+    environment:
+      POSTGRES_DSN: ${POSTGRES_DSN}
+    volumes:
+      - ./app:/code/app:rw
+      - ./migrations:/code/migrations:rw
+    command: uvicorn app.main:app --reload --workers ${APP_WORKER_COUNT} --host 0.0.0.0 --port 80
+
+  postgres:
+    restart: always
+    image: postgres:14.2
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASS}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+    networks:
+      app_net:
+        ipv4_address: ${POSTGRES_ADDR}
+    ports:
+      - 8432:5432
+    volumes:
+      - ./pg-data:/var/lib/postgresql/data
+
+
+networks:
+  app_net:
+    ipam:
+      config:
+        - subnet: 172.12.0.0/28
