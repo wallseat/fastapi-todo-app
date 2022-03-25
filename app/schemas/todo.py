@@ -10,6 +10,8 @@ class BaseTodo(BaseModel):
     created_at: datetime
     expires_at: Optional[datetime]
 
+    is_complete: bool = False
+
 
 class TodoCreate(BaseTodo):
     pass

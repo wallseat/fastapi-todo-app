@@ -1,0 +1,38 @@
+events {
+    worker_connections 1024;
+}
+
+http {
+    server {
+        root /data/;
+
+        location / {
+            root /data/static/html/;
+            index index.html;
+        }
+
+        location ~ /static/js/.+\.js {
+            autoindex on;
+        }
+
+        location ~ /static/css/.+\.css {
+            autoindex on;
+        }
+
+        location ~ /static/img/.+\.(jpg|jpeg|png) {
+            autoindex on;
+        }
+
+        location /api {
+            proxy_pass http://${APP_ADDR}:${APP_PORT}/api;
+        }
+
+        location /api/docs {
+            proxy_pass http://${APP_ADDR}:${APP_PORT}/docs;
+        }
+
+        location /openapi.json {
+            proxy_pass http://${APP_ADDR}:${APP_PORT}/openapi.json;
+        }
+    }
+}
