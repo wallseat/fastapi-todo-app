@@ -4,7 +4,7 @@ from .api.router import api_router
 from .db import engine
 from .models import metadata
 
-app = FastAPI(openapi_url="/api/openapi.json")
+app = FastAPI(openapi_url="/api/openapi.json", docs_url="/api/docs")
 
 
 @app.on_event("startup")

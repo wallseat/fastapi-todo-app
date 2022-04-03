@@ -9,6 +9,7 @@ services:
         ipv4_address: ${APP_ADDR}
     environment:
       POSTGRES_DSN: ${POSTGRES_DSN}
+
     volumes:
       - ./app:/code/app:rw
       - ./migrations:/code/migrations:rw
@@ -25,22 +26,20 @@ services:
       app_net:
         ipv4_address: ${POSTGRES_ADDR}
     ports:
-      - 8432:5432
-    volumes:
-      - ./pg-data:/var/lib/postgresql/data:rw
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
 
   nginx:
     image: nginx:latest
     restart: unless-stopped
     volumes:
-      - ./frontend:/data/static
+      - ./frontend:/www/data/static
       - ./nginx.conf.template:/etc/nginx/nginx.conf.template:ro
     ports:
-      - 8080:80
+      - ${NGINX_PORT}:${NGINX_PORT}
     environment:
-      NGINX_PORT: 80
-      APP_ADDR: 172.12.0.20
-      APP_PORT: 8000
+      NGINX_PORT: ${NGINX_PORT}
+      APP_ADDR: ${APP_ADDR}
+      APP_PORT: ${APP_PORT}
     networks:
       app_net:
         ipv4_address: ${NGINX_ADDR}

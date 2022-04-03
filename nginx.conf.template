@@ -3,36 +3,22 @@ events {
 }
 
 http {
+    include /etc/nginx/mime.types;
+
     server {
-        root /data/;
+        listen ${NGINX_PORT};
+        root /www/data/;
 
         location / {
-            root /data/static/html/;
-            index index.html;
+            index static/html/index.html;
         }
 
-        location ~ /static/js/.+\.js {
+        location /static/ {
             autoindex on;
         }
 
-        location ~ /static/css/.+\.css {
-            autoindex on;
-        }
-
-        location ~ /static/img/.+\.(jpg|jpeg|png) {
-            autoindex on;
-        }
-
-        location /api {
-            proxy_pass http://${APP_ADDR}:${APP_PORT}/api;
-        }
-
-        location /api/docs {
-            proxy_pass http://${APP_ADDR}:${APP_PORT}/docs;
-        }
-
-        location /openapi.json {
-            proxy_pass http://${APP_ADDR}:${APP_PORT}/openapi.json;
+        location /api/ {
+            proxy_pass http://${APP_ADDR}:${APP_PORT};
         }
     }
 }

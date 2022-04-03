@@ -1,0 +1,58 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 500;
+  color: #001219;
+}
+
+html {
+  font-size: 20px;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100vh;
+}
+
+.todo__container {
+  background-color: #0a9396;
+
+  border-radius: 10px;
+
+  width: 60%;
+  height: 700px;
+
+  margin: auto;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.todo__task {
+  padding: 5px;
+  margin: 0 15px 15px 15px;
+
+  border-radius: 10px;
+
+  background-color: #94d2bd;
+}
+
+.todo__task:first-child {
+  margin-top: 15px;
+}
+
+.todo__task__title {
+  width: max-content;
+  max-width: fit-content;
+}
+
+.todo__task__title hr {
+  width: 100%;
+}
