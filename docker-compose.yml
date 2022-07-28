@@ -25,8 +25,6 @@ services:
     networks:
       app_net:
         ipv4_address: ${POSTGRES_ADDR}
-    ports:
-      - ${POSTGRES_PORT}:${POSTGRES_PORT}
 
   nginx:
     image: nginx:latest
